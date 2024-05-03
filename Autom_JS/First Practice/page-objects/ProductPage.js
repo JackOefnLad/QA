@@ -5,6 +5,8 @@ export class ProductPage {
   constructor(page) {
     this.page = page; //Для ProductPage присваивается страница
     this.addButtons = page.locator("[data-qa=product-button]");
+    this.sortButton = page.locator("[data-qa=sort-dropdown]");
+    this.productTitle = page.locator("[data-qa=product-title]");
   }
   visit = async () => {
     await this.page.goto("/");
@@ -31,5 +33,17 @@ export class ProductPage {
     await expect(specButton).toHaveText("Remove from Basket"); //-- проверка текста
     const basketCounterAfterAdding = await navigation.getBasketCounter();
     expect(basketCounterAfterAdding).toBeGreaterThan(basketCounterBeforeAdding);
+  };
+
+  sortByCheapest = async () => {
+    await this.sortButton.waitFor();
+    //order of products
+    await this.productTitle.first().waitFor();
+    const productBeforeSort = await this.productTitle.allInnerTexts();
+    await this.sortButton.selectOption("price-asc");
+    const productAfterSort = await this.productTitle.allInnerTexts();
+    expect(productAfterSort).not.toEqual(productBeforeSort);
+    await this.productTitle;
+    //await this.page.pause();
   };
 }
