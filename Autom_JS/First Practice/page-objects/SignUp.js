@@ -11,16 +11,17 @@ export class SignUp {
     this.regButton = page.getByRole("button", { name: "Register" });
   }
 
-  signUpNewUser = async () => {
-    //let i = user[Math.floor(Math.random() * user.length)];
+  signUpNewUser = async (email, password) => {
+    //let i = user[Math.floor(Math.random() * user.length)]; --попытка взять рандомный элемент из массива в data.json
     //With UUID
+    // const emailId = uuidv4();
+    // const pasId = uuidv4();
+    // const email = emailId + "@gmail.com";
+
     await this.emailForm.waitFor();
-    const emailId = uuidv4();
-    const email = emailId + "@gmail.com";
     await this.emailForm.fill(email);
 
     await this.passwordForm.waitFor();
-    const pasId = uuidv4();
     await this.passwordForm.fill(pasId);
 
     //Form file
