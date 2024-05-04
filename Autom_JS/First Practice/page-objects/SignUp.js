@@ -22,7 +22,7 @@ export class SignUp {
     await this.emailForm.fill(email);
 
     await this.passwordForm.waitFor();
-    await this.passwordForm.fill(pasId);
+    await this.passwordForm.fill(password);
 
     //Form file
     //await this.emailForm.fill(user[2].email);
@@ -30,7 +30,5 @@ export class SignUp {
 
     await this.regButton.waitFor();
     await this.regButton.click();
-
-    await this.page.pause();
   };
 }
