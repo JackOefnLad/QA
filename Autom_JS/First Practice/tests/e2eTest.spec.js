@@ -37,4 +37,6 @@ test.only("New user E2E test", async ({ page }) => {
   await userDet.createUser(userDetails);
 
   await userDet.saveDetails();
+
+  await userDet.continuePayment();
 });

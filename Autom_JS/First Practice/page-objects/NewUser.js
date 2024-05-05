@@ -12,8 +12,18 @@ export class NewUser {
     this.country = page.locator("[data-qa=country-dropdown]");
 
     this.saveForNextButton = page.locator("[data-qa=save-address-button]");
+    this.continuePaymentButton = page.locator(
+      "[data-qa=continue-to-payment-button]"
+    );
     this.saveBox = page.locator("[data-qa=saved-address-container]");
-    //this.saveAndContinue = page.locator("[data-qa=continue-to-payment-button]");
+
+    //----------------Saving data
+    this.savedFName = page.locator("[data-qa=saved-address-firstName]");
+    this.savedLName = page.locator("[data-qa=saved-address-lastName]");
+    this.savedStreet = page.locator("[data-qa=saved-address-street]");
+    this.savedPostcode = page.locator("[data-qa=saved-address-postcode]");
+    this.savedCity = page.locator("[data-qa=saved-address-city]");
+    this.savedCountry = page.locator("[data-qa=saved-address-country]");
   }
 
   createUser = async (userDetails) => {
@@ -31,9 +41,6 @@ export class NewUser {
 
     await this.country.waitFor();
     await this.country.selectOption(userDetails.country);
-
-    // await this.saveForNextButton.waitFor().click();
-    // await this.saveAndContinue.waitFor().click();
   };
   saveDetails = async () => {
     const addressCountBefore = await this.saveBox.count();
@@ -41,6 +48,36 @@ export class NewUser {
     await this.saveForNextButton.click();
 
     await expect(this.saveBox).toHaveCount(addressCountBefore + 1);
-    //await this.page.pause();
+    await this.savedFName.first().waitFor();
+    expect(await this.savedFName.first().innerText()).toBe(
+      await this.fName.inputValue()
+    );
+    await this.savedFName.first().waitFor();
+    expect(await this.savedLName.first().innerText()).toBe(
+      await this.lName.inputValue()
+    );
+    await this.savedFName.first().waitFor();
+    expect(await this.savedStreet.first().innerText()).toBe(
+      await this.adressStreet.inputValue()
+    );
+    await this.savedFName.first().waitFor();
+    expect(await this.savedPostcode.first().innerText()).toBe(
+      await this.adressPostal.inputValue()
+    );
+    await this.savedFName.first().waitFor();
+    expect(await this.savedCity.first().innerText()).toBe(
+      await this.adressCity.inputValue()
+    );
+    await this.savedFName.first().waitFor();
+    expect(await this.savedCountry.first().innerText()).toBe(
+      await this.country.inputValue()
+    );
+    //-- waitFor требует await, но не при использовании вызова через expect, а непосредственно перед объектом, к которому применяется waitFor
+    //-- inputValue - проверка введенного текста, чтобы не использовать объект userDetails
+  };
+  continuePayment = async () => {
+    await this.continuePaymentButton.waitFor();
+    await this.continuePaymentButton.click();
+    await this.page.waitForURL(/\/payment/, { timeout: 3000 });
   };
 }
