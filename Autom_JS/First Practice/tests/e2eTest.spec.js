@@ -35,4 +35,6 @@ test.only("New user E2E test", async ({ page }) => {
 
   const userDet = new NewUser(page);
   await userDet.createUser(userDetails);
+
+  await userDet.saveDetails();
 });

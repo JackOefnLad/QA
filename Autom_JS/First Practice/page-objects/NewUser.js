@@ -12,7 +12,8 @@ export class NewUser {
     this.country = page.locator("[data-qa=country-dropdown]");
 
     this.saveForNextButton = page.locator("[data-qa=save-address-button]");
-    this.saveAndContinue = page.locator("[data-qa=continue-to-payment-button]");
+    this.saveBox = page.locator("[data-qa=saved-address-container]");
+    //this.saveAndContinue = page.locator("[data-qa=continue-to-payment-button]");
   }
 
   createUser = async (userDetails) => {
@@ -33,7 +34,13 @@ export class NewUser {
 
     // await this.saveForNextButton.waitFor().click();
     // await this.saveAndContinue.waitFor().click();
+  };
+  saveDetails = async () => {
+    const addressCountBefore = await this.saveBox.count();
+    await this.saveForNextButton.waitFor();
+    await this.saveForNextButton.click();
 
-    await this.page.pause();
+    await expect(this.saveBox).toHaveCount(addressCountBefore + 1);
+    //await this.page.pause();
   };
 }
