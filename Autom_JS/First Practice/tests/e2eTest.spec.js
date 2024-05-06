@@ -8,6 +8,7 @@ import { SignUp } from "../page-objects/SignUp.js";
 import { NewUser } from "../page-objects/NewUser.js";
 import { userDetails } from "../data/userDetails.js";
 import { PaymentPage } from "../page-objects/PaymentPage.js";
+import { paymentDetails } from "../data/paymentDetails.js";
 
 test.only("New user E2E test", async ({ page }) => {
   const productPage = new ProductPage(page); // Переменная pP это экземпляр класса PP с параметром page
@@ -43,4 +44,6 @@ test.only("New user E2E test", async ({ page }) => {
 
   const paymentPage = new PaymentPage(page);
   await paymentPage.activateDiscount();
+  await paymentPage.fillDetails(paymentDetails);
+  await paymentPage.completePayment();
 });
