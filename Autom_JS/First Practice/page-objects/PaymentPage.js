@@ -21,8 +21,13 @@ export class PaymentPage {
     // expect(await this.codeInput).toHaveValue(await this.discoutCode); --
 
     // -- 1st way
-    await this.discoutInput.fill(code);
-    await expect(this.discoutInput).toHaveValue(code);
+    // await this.discoutInput.fill(code);
+    // await expect(this.discoutInput).toHaveValue(code);
+
+    // -- 2nd way
+    //For input we need to focus on field
+    await this.discoutInput.focus();
+    await this.page.keyboard.type(code, { delay: 1000 });
 
     await this.page.pause();
   };
