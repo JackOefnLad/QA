@@ -1,5 +1,6 @@
 import { expect } from "@playwright/test";
 import { Navigation } from "./Navigation.js";
+import { isDesktop } from "../utilities/desktopView.js";
 
 export class ProductPage {
   constructor(page) {
@@ -28,11 +29,20 @@ export class ProductPage {
     await expect(specButton).toHaveText("Add to Basket"); //-- проверка текста
 
     const navigation = new Navigation(this.page); //--применение Navigation в данном классе
-    const basketCounterBeforeAdding = await navigation.getBasketCounter();
+    //only for desktop
+    let basketCounterBeforeAdding;
+    if (isDesktop(this.page)) {
+      basketCounterBeforeAdding = await navigation.getBasketCounter();
+    }
     await specButton.click();
     await expect(specButton).toHaveText("Remove from Basket"); //-- проверка текста
-    const basketCounterAfterAdding = await navigation.getBasketCounter();
-    expect(basketCounterAfterAdding).toBeGreaterThan(basketCounterBeforeAdding);
+    //only for desktop
+    if (isDesktop(this.page)) {
+      const basketCounterAfterAdding = await navigation.getBasketCounter();
+      expect(basketCounterAfterAdding).toBeGreaterThan(
+        basketCounterBeforeAdding
+      );
+    }
   };
 
   sortByCheapest = async () => {
