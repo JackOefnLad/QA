@@ -22,6 +22,8 @@ const config = {
      */
     timeout: 5000,
   },
+  /* Задаем файл, который будет запускаться перед каждым нашим тестом*/
+  globalSetup: require.resolve("./globalSetup.js"),
   /* Run tests in files in parallel */
   fullyParallel: true,
   /* Fail the build on CI if you accidentally left test.only in the source code. */

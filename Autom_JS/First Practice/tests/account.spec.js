@@ -1,5 +1,5 @@
-import * as dotenv from "dotenv"; //импорт всего пакета
-dotenv.config(); //вызов/установка переменных окружения
+// import * as dotenv from "dotenv"; //импорт всего пакета
+// dotenv.config(); //вызов/установка переменных окружения
 import { test, expect } from "@playwright/test";
 import { MyAccPage } from "../page-objects/Account";
 import { getLoginToken } from "../api-calls/getLoginToken";
