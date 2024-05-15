@@ -5,7 +5,7 @@ import { MyAccPage } from "../page-objects/Account";
 import { getLoginToken } from "../api-calls/getLoginToken";
 import { admintDetails } from "../data/loginDetail";
 
-test.only("Cookies injection and mocking request", async ({ page }) => {
+test("Cookies injection and mocking request", async ({ page }) => {
   //request for token
   const loginToken = await getLoginToken(
     admintDetails.username,
