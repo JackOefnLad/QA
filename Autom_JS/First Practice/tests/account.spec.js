@@ -5,12 +5,24 @@ import { MyAccPage } from "../page-objects/Account";
 import { getLoginToken } from "../api-calls/getLoginToken";
 import { admintDetails } from "../data/loginDetail";
 
-test.only("Cookies inj", async ({ page }) => {
+test.only("Cookies injection and mocking request", async ({ page }) => {
   //request for token
   const loginToken = await getLoginToken(
     admintDetails.username,
     admintDetails.password
   );
+
+  await page.route(
+    "**/api/user**" /* **- любые совпадения на месте звёзд*/,
+    async (route, request) => {
+      await route.fulfill({
+        status: 500,
+        contentType: "application/json",
+        body: JSON.stringify({ message: "Error for mocks" }),
+      });
+    }
+  );
+
   //injection into browser
   const myAcc = new MyAccPage(page);
   await myAcc.visit();
@@ -22,4 +34,5 @@ test.only("Cookies inj", async ({ page }) => {
   );
   await myAcc.visit();
   await myAcc.waitingForHeader();
+  await myAcc.waitForError();
 });
