@@ -10,7 +10,7 @@ import { userDetails } from "../data/userDetails.js";
 import { PaymentPage } from "../page-objects/PaymentPage.js";
 import { paymentDetails } from "../data/paymentDetails.js";
 
-test.only("New user E2E test", async ({ page }) => {
+test("New user E2E test", async ({ page }) => {
   const productPage = new ProductPage(page); // Переменная pP это экземпляр класса PP с параметром page
   await productPage.visit();
   await productPage.sortByCheapest();
