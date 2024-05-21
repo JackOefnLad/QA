@@ -1,4 +1,5 @@
 import { expect } from "@playwright/test";
+import { getRandomElement } from "../Functions/randSex.js";
 
 export class About {
   constructor(page) {
@@ -51,14 +52,11 @@ export class About {
     await this.email.fill("test@mail.com");
     // await this.page.mouse.wheel(0, 500);
 
-    const locator2 = this.secondSections;
-    await locator2.scrollIntoViewIfNeeded(this.secondSections);
+    await this.secondSections.scrollIntoViewIfNeeded(this.secondSections);
 
     const randSex = [this.sex, this.sex2, this.sex3];
-    function getRandomElement(randSex) {
-      return randSex[Math.floor(Math.random() * randSex.length)];
-    }
     const randomSex = getRandomElement(randSex);
+
     // console.log(randomSex);
 
     await this.sex.waitFor();
@@ -99,6 +97,7 @@ export class About {
 
     await this.confBtn.waitFor();
     await this.confBtn.click();
+
     await this.page.pause();
   };
 }
