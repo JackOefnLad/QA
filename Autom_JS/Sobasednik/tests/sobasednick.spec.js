@@ -2,12 +2,23 @@
 const { test, expect } = require("@playwright/test");
 import { Main } from "../Pages/main";
 import { About } from "../Pages/About";
+import { Blog } from "../Pages/blog";
 
-test.only("Sobasednick v2", async ({ page }) => {
+test("Sobasednick v2", async ({ page }) => {
   const main = new Main(page);
   await main.visit();
   await main.fillingSubscription();
   await main.fillingQuestion();
+  await page.pause();
+});
+
+test.only("Blog", async ({ page }) => {
+  const main = new Main(page);
+  await main.visit();
+  const blog = new Blog(page);
+  await blog.blog();
+  await blog.pickArticle();
+  // await blog.focusArcadyi();
   await page.pause();
 });
 
